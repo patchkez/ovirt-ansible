@@ -9,17 +9,24 @@
     - passwords.yml
 
   vars:
-    engine_url: https://jenkins-vm-22.qa.lab.tlv.redhat.com/ovirt-engine/api
-    engine_user: admin@internal
-    engine_cafile: /etc/pki/ovirt-engine/ca.pem
+    engine_url: https://example-ovirt-host/ovirt-engine/api
+    engine_host: "{{ engine_url | regex_replace('^(.+)//(.+)/(.+)/(.+)$', '\\2') }}"
+    ansible_user: root
+    ansible_ssh_pass: test123
 
-    qcow_url: https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
+    engine_user: admin@internal
+    remote_engine_cafile: /etc/pki/ovirt-engine/ca.pem
+    engine_cafile: /tmp/
+
+    #qcow_url: https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
+    qcow_url: http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
     template_cluster: golden_env_mixed_1
     template_name: centos7_template
     template_memory: 2GiB
     template_cpu: 2
     template_disk_size: 10GiB
-    template_disk_storage: nfs
+    #template_disk_storage: nfs
+    template_disk_storage: nfs_0
 
   roles:
     - ovirt-image-template
