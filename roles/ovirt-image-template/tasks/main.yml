@@ -42,21 +42,24 @@
     tags:
       - always
 
-  - name: Fetch storages
-    ovirt_storage_domains_facts:
-      auth: "{{ ovirt_auth }}"
-    when: template_disk_storage is undefined
-    tags:
-      - ovirt-template-image
-  
-  - name: Find data domain
-    set_fact:
-      disk_storage_domain: "{{ ovirt_storage_domains|json_query(the_query)|list|first}}"
-    when: template_disk_storage is undefined
-    vars:
-      the_query: "[?type=='data']"
-    tags:
-      - ovirt-template-image
+  #- name: Fetch storages
+  #  ovirt_storage_domains_facts:
+  #    auth: "{{ ovirt_auth }}"
+  #  when: template_disk_storage is undefined
+  #  tags:
+  #    - ovirt-template-image
+
+  #- name: debug var
+  #  debug: msg="{{ ovirt_storage_domains }}"
+ 
+  #- name: Find data domain
+  #  set_fact:
+  #    disk_storage_domain: "{{ ovirt_storage_domains|json_query(the_query)|list|first}}"
+  #  when: template_disk_storage is undefined
+  #  vars:
+  #    the_query: "[?type=='data']"
+  #  tags:
+  #    - ovirt-template-image
   
   - name: Check if template already exists
     ovirt_templates_facts:
