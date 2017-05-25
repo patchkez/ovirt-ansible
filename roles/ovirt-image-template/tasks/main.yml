@@ -61,12 +61,12 @@
   #  tags:
   #    - ovirt-template-image
   
-  - name: Check if template already exists
-    ovirt_templates_facts:
-      auth: "{{ ovirt_auth }}"
-      pattern: "name={{ template_name }}"
-    tags:
-      - ovirt-template-image
+  #- name: Check if template already exists
+  #  ovirt_templates_facts:
+  #    auth: "{{ ovirt_auth }}"
+  #    pattern: "name={{ template_name }}"
+  #  tags:
+  #    - ovirt-template-image
   
   - name: Deploy the qcow image to oVirt engine
     ovirt_disks:
@@ -79,7 +79,7 @@
       storage_domain: "{{ template_disk_storage | default(disk_storage_domain.name) }}"
       force: "{{ ovirt_templates | length == 0 }}"
     register: ovirt_disk
-    when: ovirt_templates | length == 0
+    #when: ovirt_templates | length == 0
     tags:
       - ovirt-template-image
   
@@ -97,7 +97,7 @@
         - id: "{{ ovirt_disk.id }}"
           bootable: true
       nics: "{{ template_nics }}"
-    when: ovirt_templates | length == 0
+    #when: ovirt_templates | length == 0
     tags:
       - ovirt-template-image
   
@@ -107,7 +107,7 @@
       name: "{{ template_name }}"
       vm: "{{ vm_name }}"
       timeout: "{{ template_timeout }}"
-    when: ovirt_templates | length == 0
+    #when: ovirt_templates | length == 0
     tags:
       - ovirt-template-image
   
@@ -117,7 +117,7 @@
         auth: "{{ ovirt_auth }}"
         state: absent
         name: "{{ vm_name }}"
-      when: ovirt_templates | length == 0
+      #when: ovirt_templates | length == 0
       tags:
         - ovirt-template-image
 
